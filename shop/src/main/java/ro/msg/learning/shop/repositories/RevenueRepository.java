@@ -1,0 +1,14 @@
+package ro.msg.learning.shop.repositories;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import ro.msg.learning.shop.entities.Revenue;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Component
+public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
+    List<Revenue> findAllByDate(LocalDate givenDate);
+}
