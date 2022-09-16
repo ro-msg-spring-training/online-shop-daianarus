@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ProductCategoryDTO {
+public class ProductCategoryDTO implements Serializable {
     private String name;
     private String description;
 }
