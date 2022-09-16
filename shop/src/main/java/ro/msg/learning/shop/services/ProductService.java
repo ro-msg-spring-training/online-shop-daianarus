@@ -22,7 +22,7 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final ProductCategoryRepository productCategoryRepo;
+    private final ProductCategoryRepository productCategoryRepository;
 
     public ProductDTO createProduct(ProductDTO productDto) {
         Product product = Product.builder()
@@ -31,24 +31,24 @@ public class ProductService {
                 .price(productDto.getPrice())
                 .weight(productDto.getWeight())
                 .imageUrl(productDto.getImageUrl())
-                .productCategory(checkCategoryExistence(productDto.getProductCategory()))
+                .productCategory(isCategory(productDto.getProductCategory()))
                 .build();
         productRepository.save(product);
         return productMapper.productToProductDTO(product);
     }
 
-    public ProductCategory checkCategoryExistence(ProductCategoryDTO category) {
-        Optional<ProductCategory> searchedCategory = productCategoryRepo.findByName(category.getName());
-        ProductCategory crtProductCategory = null;
+    public ProductCategory isCategory(ProductCategoryDTO productCategoryDTO) {
+        Optional<ProductCategory> searchedCategory = productCategoryRepository.findByName(productCategoryDTO.getName());
+        ProductCategory productCategory;
         if (searchedCategory.isPresent()) {
-            crtProductCategory = searchedCategory.get();
+            productCategory = searchedCategory.get();
         } else {
-            crtProductCategory = new ProductCategory();
-            crtProductCategory.setName(category.getName());
-            crtProductCategory.setDescription(category.getDescription());
-            productCategoryRepo.save(crtProductCategory);
+            productCategory = new ProductCategory();
+            productCategory.setName(productCategoryDTO.getName());
+            productCategory.setDescription(productCategoryDTO.getDescription());
+            productCategoryRepository.save(productCategory);
         }
-        return crtProductCategory;
+        return productCategory;
 
     }
 
@@ -62,7 +62,7 @@ public class ProductService {
             updated.setDescription(updatedProduct.getDescription());
             updated.setWeight(updatedProduct.getWeight());
             updated.setImageUrl(updatedProduct.getImageUrl());
-            updated.setProductCategory(checkCategoryExistence(updatedProduct.getProductCategory()));
+            updated.setProductCategory(isCategory(updatedProduct.getProductCategory()));
             productRepository.save(updated);
             resultedProduct = productMapper.productToProductDTO(updated);
         }
@@ -78,7 +78,7 @@ public class ProductService {
         try {
             List<Product> products = productRepository.findAll();
             if (products.isEmpty()) {
-                throw new ProductNotFoundException("No products were found");
+                throw new ProductNotFoundException("Products not found!");
             } else {
                 for (Product p : products) {
                     existingProducts.add(productMapper.productToProductDTO(p));
