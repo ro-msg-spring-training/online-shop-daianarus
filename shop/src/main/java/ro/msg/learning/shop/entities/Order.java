@@ -23,11 +23,6 @@ public class Order {
     private Integer id;
     private LocalDateTime createdAt;
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "address_city")),
-            @AttributeOverride(name = "country", column = @Column(name = "address_country")),
-            @AttributeOverride(name = "street", column = @Column(name = "address_street"))
-    })
     @EqualsAndHashCode.Include
     private Address address;
 

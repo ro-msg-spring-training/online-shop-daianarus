@@ -24,11 +24,6 @@ public class Location {
     private Integer id;
     private String name;
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "address_city")),
-            @AttributeOverride(name = "country", column = @Column(name = "address_country")),
-            @AttributeOverride(name = "street", column = @Column(name = "address_street"))
-    })
     private Address address;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
