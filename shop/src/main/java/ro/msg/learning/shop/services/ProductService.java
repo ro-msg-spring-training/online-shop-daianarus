@@ -1,8 +1,9 @@
 package ro.msg.learning.shop.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import ro.msg.learning.shop.dtos.ProductCategoryDTO;
 import ro.msg.learning.shop.dtos.ProductDTO;
 import ro.msg.learning.shop.entities.Product;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@Transactional
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -31,13 +32,13 @@ public class ProductService {
                 .price(productDto.getPrice())
                 .weight(productDto.getWeight())
                 .imageUrl(productDto.getImageUrl())
-                .productCategory(isCategory(productDto.getProductCategory()))
+                .productCategory(checkCategoryPresence(productDto.getProductCategory()))
                 .build();
         productRepository.save(product);
         return productMapper.productToProductDTO(product);
     }
 
-    public ProductCategory isCategory(ProductCategoryDTO productCategoryDTO) {
+    public ProductCategory checkCategoryPresence(ProductCategoryDTO productCategoryDTO) {
         Optional<ProductCategory> searchedCategory = productCategoryRepository.findByName(productCategoryDTO.getName());
         ProductCategory productCategory;
         if (searchedCategory.isPresent()) {
@@ -53,7 +54,7 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(Integer id, ProductDTO updatedProduct) {
-        ProductDTO resultedProduct = null;
+        ProductDTO resultedProduct;
         Optional<Product> productToUpdate = productRepository.findById(id);
         if (productToUpdate.isPresent()) {
             Product updated = productToUpdate.get();
@@ -62,10 +63,10 @@ public class ProductService {
             updated.setDescription(updatedProduct.getDescription());
             updated.setWeight(updatedProduct.getWeight());
             updated.setImageUrl(updatedProduct.getImageUrl());
-            updated.setProductCategory(isCategory(updatedProduct.getProductCategory()));
+            updated.setProductCategory(checkCategoryPresence(updatedProduct.getProductCategory()));
             productRepository.save(updated);
             resultedProduct = productMapper.productToProductDTO(updated);
-        }
+        } else throw new ProductNotFoundException("Product not found!");
         return resultedProduct;
     }
 
@@ -85,10 +86,9 @@ public class ProductService {
                 }
             }
         } catch (ProductNotFoundException ex) {
-            log.info(ex.getMessage());
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return existingProducts;
-
     }
 
     public ProductDTO getProductById(Integer id) {
