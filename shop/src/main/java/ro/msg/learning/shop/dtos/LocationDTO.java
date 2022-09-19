@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ro.msg.learning.shop.utils.Address;
 
-import java.io.Serializable;
-
-@Data
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class ProductCategoryDTO{
+@Data
+public class LocationDTO {
+    private Address address;
     private String name;
-    private String description;
 }

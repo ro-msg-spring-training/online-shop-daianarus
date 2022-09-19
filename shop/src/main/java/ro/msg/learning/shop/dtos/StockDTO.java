@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class ProductCategoryDTO{
-    private String name;
-    private String description;
+@Builder
+public class StockDTO {
+    private Integer id;
+    private Integer locationId;
+    private Integer productId;
+    private Integer quantity;
 }
