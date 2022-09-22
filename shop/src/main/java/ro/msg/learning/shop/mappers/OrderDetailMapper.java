@@ -11,20 +11,20 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class OrderDetailMapper {
-    public OrderDetailDTO orderDetailToOrderDetailDTO(OrderDetail orderDetail) {
+    public static OrderDetailDTO orderDetailToOrderDetailDTO(OrderDetail orderDetail) {
         return OrderDetailDTO.builder()
                 .productId(orderDetail.getProduct().getId())
                 .quantity(orderDetail.getQuantity())
                 .build();
     }
 
-    public OrderDetail orderDetailDTOToOrderDetail(OrderDetailDTO orderDetailDTO) {
+    public static OrderDetail orderDetailDTOToOrderDetail(OrderDetailDTO orderDetailDTO) {
         return OrderDetail.builder()
                 .quantity(orderDetailDTO.getQuantity())
                 .build();
     }
 
-    public List<OrderDetailDTO> orderDetailListToOrderDetailDTOList(List<OrderDetail> orderDetailList) {
+    public static List<OrderDetailDTO> orderDetailListToOrderDetailDTOList(List<OrderDetail> orderDetailList) {
         List<OrderDetailDTO> orderDetailDTO = new ArrayList<>();
         for (OrderDetail orderDetail : orderDetailList) {
             OrderDetailDTO crtOrderDetailDTO = orderDetailToOrderDetailDTO(orderDetail);
@@ -34,7 +34,7 @@ public class OrderDetailMapper {
         return orderDetailDTO;
     }
 
-    public List<OrderDetail> orderDetailDTOListToOrderDetailList(List<OrderDetailDTO> orderDetailListDTO) {
+    public static List<OrderDetail> orderDetailDTOListToOrderDetailList(List<OrderDetailDTO> orderDetailListDTO) {
         List<OrderDetail> orderDetail = new ArrayList<>();
         for (OrderDetailDTO crtOrderDetailDTO : orderDetailListDTO) {
             orderDetail.add(orderDetailDTOToOrderDetail(crtOrderDetailDTO));

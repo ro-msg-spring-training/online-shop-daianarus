@@ -1,6 +1,7 @@
-package ro.msg.learning.shop.utils;
+package ro.msg.learning.shop.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
+@Builder
 public class Address {
     private String country;
     private String city;

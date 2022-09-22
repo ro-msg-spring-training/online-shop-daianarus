@@ -1,40 +1,55 @@
 package ro.msg.learning.shop.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.dtos.ProductDTO;
+import ro.msg.learning.shop.entities.Product;
+import ro.msg.learning.shop.mappers.ProductMapper;
 import ro.msg.learning.shop.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/products")
 public class ProductController {
+    @Autowired
     private final ProductService productService;
 
-    @PostMapping
-    public ProductDTO createProduct(@RequestBody ProductDTO productDTO){
-        return productService.createProduct(productDTO);
+    @PostMapping(value = "/add", produces = {"application/json"})
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+        Product product = productService.createProduct(ProductMapper.productDTOToProduct(productDTO));
+        ProductDTO productToAdd = ProductMapper.productToProductDTO(product);
+        return new ResponseEntity<>(productToAdd, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Integer id){
+    @DeleteMapping(value = "/delete/{id}", produces = {"application/json"})
+    public void deleteProductById(@PathVariable Integer id) {
         productService.deleteProductById(id);
     }
 
-    @GetMapping
-    public List<ProductDTO> readProducts(){
-        return productService.getAllProducts();
+    @GetMapping(produces = {"application/json"})
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        List<ProductDTO> productDTOS = products.stream().map(ProductMapper::productToProductDTO).collect(Collectors.toList());
+        return new ResponseEntity<>(productDTOS, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable Integer id, @RequestBody ProductDTO productDTO){
-        return productService.updateProduct(id,productDTO);
+    @PostMapping(value = "/update/{id}", produces = {"application/json"})
+    public ResponseEntity<ProductDTO> updateProductById(@PathVariable Integer id, @RequestBody ProductDTO productToUpdate) {
+        Product product = productService.updateProduct(id, ProductMapper.productDTOToProduct(productToUpdate));
+        ProductDTO productDTO = ProductMapper.productToProductDTO(product);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ProductDTO readProductById(@PathVariable Integer id){
-        return productService.getProductById(id);
+    @GetMapping(value = "/{id}", produces = {"application/json"})
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Integer id) {
+        Product product = productService.getProductById(id);
+        ProductDTO productToFind = ProductMapper.productToProductDTO(product);
+        return new ResponseEntity<>(productToFind, HttpStatus.OK);
     }
 }

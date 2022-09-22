@@ -1,46 +1,49 @@
 package ro.msg.learning.shop.strategies;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import ro.msg.learning.shop.dtos.OrderDetailDTO;
-import ro.msg.learning.shop.dtos.StockDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import ro.msg.learning.shop.entities.Order;
 import ro.msg.learning.shop.entities.Stock;
-import ro.msg.learning.shop.exceptions.ProductsCantBeShipped;
-import ro.msg.learning.shop.mappers.StockMapper;
-import ro.msg.learning.shop.repositories.LocationRepository;
+import ro.msg.learning.shop.exceptions.OutOfStockException;
 import ro.msg.learning.shop.repositories.StockRepository;
-import ro.msg.learning.shop.services.LocationService;
-import ro.msg.learning.shop.services.StockService;
-import ro.msg.learning.shop.utils.IDs;
-import ro.msg.learning.shop.utils.LocationFormat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
-@RequiredArgsConstructor
 public class SingleLocationStrategy implements StrategyInterface {
-    private final StockRepository stockRepository;
-    private final StockService stockService;
-    private final LocationService locationService;
+    @Autowired
+    private StockRepository stockRepository;
 
     @Override
-    public List<StockDTO> implementStrategy(List<OrderDetailDTO> orderDetailDTOList, LocationFormat deliveryAddress) {
-        Map<Integer, Integer> productIDsAndQuantities = getOrderedProductsIDsAndQuantitiesMap(orderDetailDTOList);
-        List<Integer> locationsIDsWithAvailableStocks = locationService.findLocationWithProductAndQuantity(productIDsAndQuantities);
-        if (!locationsIDsWithAvailableStocks.isEmpty()) {
-            List<Stock> stocks = stockService.findStocksByLocationAndProductIDs(createLocationAndProductIDsList(locationsIDsWithAvailableStocks.get(0), getOrderedProductsIDsList(orderDetailDTOList)));
-            return getAndUpdateAvailableStocks(stocks, orderDetailDTOList, stockRepository, stockService);
-        }
-        throw new ProductsCantBeShipped("Demanded products can't be taken from single location!");
-    }
+    public List<Stock> findLocation(Order order) {
+        Map<Integer, List<Stock>> locations = new HashMap<>();
+        order.getOrderDetails().forEach(orderDetail -> {
+                    List<Stock> stocks = stockRepository
+                            .findLocationByProductAndQuantity(orderDetail.getProduct().getId(), orderDetail.getQuantity());
+                    if (stocks.isEmpty()) {
+                        throw new OutOfStockException(orderDetail.getId());
+                    }
 
-    public List<IDs> createLocationAndProductIDsList(Integer locationID, List<Integer> orderedProductsIDs) {
-        List<IDs> result = new ArrayList<>();
-        for (Integer productID : orderedProductsIDs) {
-            result.add(new IDs(locationID, productID));
+                    stocks.forEach(stock -> {
+                        List<Stock> locationList = locations.get(stock.getLocation().getId());
+                        if (locationList == null) {
+                            locationList = new ArrayList<>();
+                        }
+                        locationList.add(Stock.builder()
+                                .location(stock.getLocation())
+                                .product(stock.getProduct())
+                                .quantity(stock.getQuantity())
+                                .build());
+                        locations.put(stock.getLocation().getId(), locationList);
+                    });
+                }
+        );
+        for (Map.Entry<Integer, List<Stock>> entry : locations.entrySet()) {
+            if (entry.getValue().size() == order.getOrderDetails().size()) {
+                return entry.getValue();
+            }
         }
-        return result;
+        return new ArrayList<>();
     }
 }

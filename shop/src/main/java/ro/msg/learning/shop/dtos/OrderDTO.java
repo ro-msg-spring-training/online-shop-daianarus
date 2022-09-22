@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ro.msg.learning.shop.utils.Address;
+import ro.msg.learning.shop.entities.Address;
 
 import java.util.List;
 

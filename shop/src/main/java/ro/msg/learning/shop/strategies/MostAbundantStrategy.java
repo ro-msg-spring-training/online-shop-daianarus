@@ -1,47 +1,42 @@
 package ro.msg.learning.shop.strategies;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import ro.msg.learning.shop.dtos.OrderDetailDTO;
-import ro.msg.learning.shop.dtos.StockDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import ro.msg.learning.shop.entities.Order;
 import ro.msg.learning.shop.entities.Stock;
-import ro.msg.learning.shop.exceptions.ProductsCantBeShipped;
+import ro.msg.learning.shop.exceptions.OutOfStockException;
+import ro.msg.learning.shop.exceptions.ProductNotFoundException;
 import ro.msg.learning.shop.repositories.StockRepository;
-import ro.msg.learning.shop.services.StockService;
-import ro.msg.learning.shop.utils.LocationFormat;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-@Component
-@RequiredArgsConstructor
-public class MostAbundantStrategy implements StrategyInterface{
-    private final StockRepository stockRepository;
-    private final StockService stockService;
+public class MostAbundantStrategy implements StrategyInterface {
+    @Autowired
+    private StockRepository stockRepository;
 
     @Override
-    public List<StockDTO> implementStrategy(List<OrderDetailDTO> orderDetailDTOList, LocationFormat deliveryAddress) {
+    public List<Stock> findLocation(Order orders) {
 
-        List<StockDTO> resultedStocks = new ArrayList<>();
-
-        for (OrderDetailDTO demandedProduct : orderDetailDTOList) {
-            List<Stock> stocksContainingDemandedProduct = stockRepository.findAllByProductId(demandedProduct.getProductId());
-
-            Stock mostAbundant = stocksContainingDemandedProduct.stream().max(Comparator.comparing(Stock::getQuantity)).get();
-            if (demandedProduct.getQuantity() <= mostAbundant.getQuantity()) {
-                StockDTO targetStock = StockDTO.builder()
-                        .quantity(demandedProduct.getQuantity())
-                        .locationId(mostAbundant.getLocation().getId())
-                        .productId(demandedProduct.getProductId())
-                        .build();
-                resultedStocks.add(targetStock);
-                stockService.updateStock(mostAbundant, demandedProduct.getQuantity());
-                if (resultedStocks.size() == orderDetailDTOList.size()) {
-                    return resultedStocks;
+        List<Stock> stockLocation = new ArrayList<>();
+        orders.getOrderDetails().forEach(orderDetail -> {
+            try {
+                List<Stock> stocks = stockRepository.findLocationByProductAndQuantity(orderDetail.getProduct().getId(), orderDetail.getQuantity());
+                if (stocks.isEmpty()) {
+                    throw new OutOfStockException(orderDetail.getProduct().getId());
                 }
+                //because we query the products ordered by quantity(desc)we can now select the first stock to be the most abundant
+                Stock stock = stocks.get(0);
+                stockLocation.add(Stock.builder()
+                        .location(stock.getLocation())
+                        .product(stock.getProduct())
+                        .quantity(stock.getQuantity())
+                        .build());
+            } catch (NoSuchElementException e) {
+                throw new ProductNotFoundException(orderDetail.getProduct().getId());
             }
-        }
-        throw new ProductsCantBeShipped("Products not available at the moment!");
+
+        });
+        return stockLocation;
     }
 }

@@ -8,14 +8,21 @@ import ro.msg.learning.shop.entities.Order;
 @Component
 @RequiredArgsConstructor
 public class OrderMapper {
-    private final OrderDetailMapper orderDetailMapper;
 
-    public OrderDTO orderToOrderDto(Order order) {
+    public static OrderDTO orderToOrderDTO(Order order) {
         return OrderDTO.builder()
                 .orderID(order.getId())
                 .userID(order.getCustomer().getId())
                 .address(order.getAddress())
-                .orderedProducts(orderDetailMapper.orderDetailListToOrderDetailDTOList(order.getOrderDetails()))
+                .orderedProducts(OrderDetailMapper.orderDetailListToOrderDetailDTOList(order.getOrderDetails()))
+                .build();
+    }
+
+    public static Order orderDTOToOrder(OrderDTO orderDTO) {
+        return Order.builder()
+                .id(orderDTO.getOrderID())
+                .address(orderDTO.getAddress())
+                .orderDetails(OrderDetailMapper.orderDetailDTOListToOrderDetailList(orderDTO.getOrderedProducts()))
                 .build();
     }
 }
