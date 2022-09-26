@@ -3,9 +3,9 @@ package ro.msg.learning.shop.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.entities.Product;
-import ro.msg.learning.shop.exceptions.ProductNotFoundException;
 import ro.msg.learning.shop.repositories.ProductRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +49,7 @@ public class ProductService {
         if (searchedProduct.isPresent()) {
             return searchedProduct.get();
         } else {
-            throw new ProductNotFoundException(id);
+            throw new EntityNotFoundException("Product" + id + "not found!");
         }
     }
 }

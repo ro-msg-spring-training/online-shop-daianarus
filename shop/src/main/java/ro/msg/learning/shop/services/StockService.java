@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.entities.Location;
 import ro.msg.learning.shop.entities.Stock;
-import ro.msg.learning.shop.exceptions.NoLocationForStocksException;
 import ro.msg.learning.shop.repositories.LocationRepository;
 import ro.msg.learning.shop.repositories.StockRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +40,6 @@ public class StockService {
         if (location.isPresent()) {
             stocks = stockRepository.findByLocationId(locationId);
             return stocks;
-        } else throw new NoLocationForStocksException("We can't find the location with id " + locationId);
+        } else throw new EntityNotFoundException("Location " + locationId + "not found!");
     }
 }

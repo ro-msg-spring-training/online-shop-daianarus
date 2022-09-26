@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ro.msg.learning.shop.entities.Order;
 import ro.msg.learning.shop.entities.Stock;
 import ro.msg.learning.shop.exceptions.OutOfStockException;
-import ro.msg.learning.shop.exceptions.ProductNotFoundException;
 import ro.msg.learning.shop.repositories.StockRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,7 +33,7 @@ public class MostAbundantStrategy implements StrategyInterface {
                         .quantity(stock.getQuantity())
                         .build());
             } catch (NoSuchElementException e) {
-                throw new ProductNotFoundException(orderDetail.getProduct().getId());
+                throw new EntityNotFoundException("Product" + orderDetail.getProduct().getId() + "not found!");
             }
 
         });
