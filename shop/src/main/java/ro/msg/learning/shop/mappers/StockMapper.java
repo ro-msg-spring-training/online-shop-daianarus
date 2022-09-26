@@ -20,7 +20,7 @@ public class StockMapper {
     private final LocationRepository locationRepository;
     private final ProductRepository productRepository;
 
-    public StockDTO stockToStockDTO(Stock stock) {
+    public static StockDTO stockToStockDTO(Stock stock) {
         return StockDTO.builder()
                 .id(stock.getId())
                 .quantity(stock.getQuantity())
@@ -44,7 +44,7 @@ public class StockMapper {
         }
     }
 
-    public List<StockDTO> stockListToStockListDTO(List<Stock> stocks) {
+    public static List<StockDTO> stockListToStockListDTO(List<Stock> stocks) {
         List<StockDTO> resultedStocksDTO = new ArrayList<>();
         for (Stock crtStock : stocks) {
             resultedStocksDTO.add(stockToStockDTO(crtStock));

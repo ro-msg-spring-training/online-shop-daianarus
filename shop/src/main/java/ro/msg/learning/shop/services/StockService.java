@@ -8,6 +8,7 @@ import ro.msg.learning.shop.entities.Stock;
 import ro.msg.learning.shop.exceptions.NoLocationForStocksException;
 import ro.msg.learning.shop.repositories.LocationRepository;
 import ro.msg.learning.shop.repositories.StockRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +28,13 @@ public class StockService {
         stockRepository.deleteAll();
     }
 
-    public void updateStock(Stock stockToUpdate, Integer quantityTaken){
-        Integer newQuantity= stockToUpdate.getQuantity()-quantityTaken;
+    public void updateStock(Stock stockToUpdate, Integer quantityTaken) {
+        Integer newQuantity = stockToUpdate.getQuantity() - quantityTaken;
         stockToUpdate.setQuantity(newQuantity);
         stockRepository.save(stockToUpdate);
     }
-    public List<Stock> findStocksByLocationIDs(Integer locationId) {
+
+    public List<Stock> exportStocks(Integer locationId) {
         List<Stock> stocks;
         Optional<Location> location = locationRepository.findById(locationId);
         if (location.isPresent()) {
