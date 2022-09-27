@@ -1,7 +1,9 @@
 package ro.msg.learning.shop.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.msg.learning.shop.entities.Product;
 import ro.msg.learning.shop.repositories.ProductRepository;
 
@@ -12,12 +14,15 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+    @Autowired
     private final ProductRepository productRepository;
 
+    @Transactional
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
+    @Transactional
     public Product updateProduct(Integer id, Product updatedProduct) {
         Optional<Product> productToUpdate = productRepository.findById(id);
         Product result = null;
@@ -36,8 +41,14 @@ public class ProductService {
         return result;
     }
 
+    @Transactional
     public void deleteProductById(Integer id) {
         productRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
     }
 
     public List<Product> getAllProducts() {

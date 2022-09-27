@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class CSVConverter <T>{
     CsvMapper mapper = new CsvMapper();
 
-    public List<T> fromCsv(Class<T> csvClass, InputStream csvInput) throws IOException {
+    public List<T> convertFromCsv(Class<T> csvClass, InputStream csvInput) throws IOException {
 
         CsvSchema schema = this.mapper.schemaFor(csvClass);
 
@@ -29,7 +29,7 @@ public class CSVConverter <T>{
 
     }
 
-    public void toCsv(Class<T> csvClass, List<T> items, OutputStream csvOutput) throws IOException {
+    public void convertToCsv(Class<T> csvClass, List<T> items, OutputStream csvOutput) throws IOException {
 
         Field[] fields = csvClass.getDeclaredFields();
         CsvSchema schema = this.mapper.typedSchemaFor(csvClass);

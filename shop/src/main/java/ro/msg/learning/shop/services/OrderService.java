@@ -3,6 +3,7 @@ package ro.msg.learning.shop.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.msg.learning.shop.entities.*;
 import ro.msg.learning.shop.repositories.*;
 import ro.msg.learning.shop.strategies.StrategyInterface;
@@ -12,6 +13,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderService {
     @Autowired
     private OrderRepository ordersRepository;
@@ -28,7 +30,13 @@ public class OrderService {
 
     public Order createOrder(Order order) {
 
-        List<Stock> stocks = strategyInterface.findLocation(order);
+        ordersRepository.save(findOrderInStock(order));
+
+        return order;
+    }
+
+    public Order findOrderInStock(Order order) {
+        List<Stock> stocks = strategyInterface.implementStrategy(order);
         try {
             order.setShippedFrom(stocks.get(0).getLocation());
             order.setCreatedAt(LocalDateTime.now());
@@ -36,8 +44,6 @@ public class OrderService {
         } catch (IndexOutOfBoundsException e) {
             throw new IndexOutOfBoundsException("We don't have all products in stock right now");
         }
-
-        ordersRepository.save(order);
 
         List<OrderDetail> orderDetailsProducts = order.getOrderDetails();
 
@@ -53,9 +59,9 @@ public class OrderService {
                     orderDetailRepository.save(orderDetails);
 
                 }
-
             }
         });
+
         return order;
     }
 }

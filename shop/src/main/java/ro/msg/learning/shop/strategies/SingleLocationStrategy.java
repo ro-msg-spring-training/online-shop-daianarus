@@ -16,7 +16,7 @@ public class SingleLocationStrategy implements StrategyInterface {
     private StockRepository stockRepository;
 
     @Override
-    public List<Stock> findLocation(Order order) {
+    public List<Stock> implementStrategy(Order order) {
         Map<Integer, List<Stock>> locations = new HashMap<>();
         order.getOrderDetails().forEach(orderDetail -> {
                     List<Stock> stocks = stockRepository

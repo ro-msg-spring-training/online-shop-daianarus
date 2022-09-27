@@ -3,6 +3,7 @@ package ro.msg.learning.shop.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.msg.learning.shop.entities.Location;
 import ro.msg.learning.shop.entities.Stock;
 import ro.msg.learning.shop.repositories.LocationRepository;
@@ -20,14 +21,17 @@ public class StockService {
     @Autowired
     private final LocationRepository locationRepository;
 
+    @Transactional
     public void createStock(Stock stock) {
         stockRepository.save(stock);
     }
 
+    @Transactional
     public void deleteAllStocks() {
         stockRepository.deleteAll();
     }
 
+    @Transactional
     public void updateStock(Stock stockToUpdate, Integer quantityTaken) {
         Integer newQuantity = stockToUpdate.getQuantity() - quantityTaken;
         stockToUpdate.setQuantity(newQuantity);

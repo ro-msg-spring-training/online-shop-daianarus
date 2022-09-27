@@ -1,12 +1,12 @@
 package ro.msg.learning.shop.mappers;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dtos.ProductDTO;
 import ro.msg.learning.shop.entities.Product;
 
 @Component
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ProductMapper {
     public static ProductDTO productToProductDTO(Product product) {
         return ProductDTO.builder()

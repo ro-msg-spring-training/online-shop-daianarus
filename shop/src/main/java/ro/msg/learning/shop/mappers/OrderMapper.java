@@ -1,12 +1,12 @@
 package ro.msg.learning.shop.mappers;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dtos.OrderDTO;
 import ro.msg.learning.shop.entities.Order;
 
 @Component
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class OrderMapper {
 
     public static OrderDTO orderToOrderDTO(Order order) {

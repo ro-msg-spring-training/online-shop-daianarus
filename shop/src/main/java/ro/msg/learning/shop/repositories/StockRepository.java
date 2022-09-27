@@ -12,6 +12,13 @@ import java.util.List;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
+    /**
+     * The query would return a list of stocks with available products ordered by quantity(desc).
+     *
+     * @param productId searched product in stock
+     * @param quantity  minimum searched quantity
+     * @return list of stocks
+     */
     @Query(value = "SELECT s FROM Stock s WHERE s.product.id = :productId AND s.quantity >= :quantity ORDER BY s.quantity DESC")
     List<Stock> findLocationByProductAndQuantity(@Param("productId") Integer productId, @Param("quantity") Integer quantity);
 

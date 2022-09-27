@@ -38,12 +38,12 @@ public class MessageConverter extends AbstractGenericHttpMessageConverter<Object
             arrayList = Collections.singletonList(o);
         }
 
-        csvConverter.toCsv((Class<Object>) arrayList.get(0).getClass(), arrayList, httpOutputMessage.getBody());
+        csvConverter.convertToCsv((Class<Object>) arrayList.get(0).getClass(), arrayList, httpOutputMessage.getBody());
     }
 
     @Override
     protected Object readInternal(Class aClass, HttpInputMessage httpInputMessage) throws HttpMessageNotReadableException, IOException {
-        return csvConverter.fromCsv(aClass, httpInputMessage.getBody());
+        return csvConverter.convertFromCsv(aClass, httpInputMessage.getBody());
     }
 
     @Override

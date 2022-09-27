@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.mappers;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dtos.OrderDetailDTO;
 import ro.msg.learning.shop.entities.OrderDetail;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class OrderDetailMapper {
     public static OrderDetailDTO orderDetailToOrderDetailDTO(OrderDetail orderDetail) {
         return OrderDetailDTO.builder()
@@ -27,9 +27,9 @@ public class OrderDetailMapper {
     public static List<OrderDetailDTO> orderDetailListToOrderDetailDTOList(List<OrderDetail> orderDetailList) {
         List<OrderDetailDTO> orderDetailDTO = new ArrayList<>();
         for (OrderDetail orderDetail : orderDetailList) {
-            OrderDetailDTO crtOrderDetailDTO = orderDetailToOrderDetailDTO(orderDetail);
-            crtOrderDetailDTO.setProductId(orderDetail.getProduct().getId());
-            orderDetailDTO.add(crtOrderDetailDTO);
+            OrderDetailDTO currentOrderDetailDTO = orderDetailToOrderDetailDTO(orderDetail);
+            currentOrderDetailDTO.setProductId(orderDetail.getProduct().getId());
+            orderDetailDTO.add(currentOrderDetailDTO);
         }
         return orderDetailDTO;
     }

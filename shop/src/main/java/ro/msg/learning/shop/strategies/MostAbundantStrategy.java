@@ -16,7 +16,7 @@ public class MostAbundantStrategy implements StrategyInterface {
     private StockRepository stockRepository;
 
     @Override
-    public List<Stock> findLocation(Order orders) {
+    public List<Stock> implementStrategy(Order orders) {
 
         List<Stock> stockLocation = new ArrayList<>();
         orders.getOrderDetails().forEach(orderDetail -> {

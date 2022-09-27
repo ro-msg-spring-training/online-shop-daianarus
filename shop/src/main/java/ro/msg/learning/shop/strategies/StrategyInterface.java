@@ -6,5 +6,5 @@ import ro.msg.learning.shop.entities.Stock;
 import java.util.*;
 
 public interface StrategyInterface {
-    List<Stock> findLocation(Order order);
+    List<Stock> implementStrategy(Order order);
 }

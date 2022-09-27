@@ -1,14 +1,14 @@
 package ro.msg.learning.shop.mappers;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dtos.AddressDTO;
 import ro.msg.learning.shop.entities.Address;
 
 @Component
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class AddressMapper {
-    public AddressDTO fromAddressToAddressDTO(Address address) {
+    public static AddressDTO fromAddressToAddressDTO(Address address) {
         return AddressDTO.builder()
                 .country(address.getCountry())
                 .city(address.getCity())
@@ -16,7 +16,7 @@ public class AddressMapper {
                 .build();
     }
 
-    public Address fromAddressDTOToAddress(AddressDTO addressDTO) {
+    public static Address fromAddressDTOToAddress(AddressDTO addressDTO) {
         return Address.builder()
                 .country(addressDTO.getCountry())
                 .city(addressDTO.getCity())
