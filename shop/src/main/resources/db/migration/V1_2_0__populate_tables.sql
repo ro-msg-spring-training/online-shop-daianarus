@@ -1,0 +1,10 @@
+insert into supplier (name) values ('Alphazap');
+insert into supplier (name) values ('Cookley');
+insert into supplier (name) values ('Zaam-Dox');
+insert into supplier (name) values ('Redhold');
+insert into supplier (name) values ('Sub-Ex');
+insert into supplier (name) values ('Flowdesk');
+insert into supplier (name) values ('Lotlux');
+insert into supplier (name) values ('Trippledex');
+insert into supplier (name) values ('Home Ing');
+insert into supplier (name) values ('Regrant');

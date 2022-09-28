@@ -23,7 +23,7 @@ public class Order {
     private Address address;
 
     @ManyToOne()
-    @JoinColumn(name = "shippedFrom")
+    @JoinColumn(name = "shipped_from")
     private Location shippedFrom;
 
     @ManyToOne

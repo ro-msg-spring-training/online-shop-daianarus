@@ -1,0 +1,10 @@
+insert into stock (quantity, location_id, product_id) values (95, 31, 4);
+insert into stock (quantity, location_id, product_id) values (35, 34, 6);
+insert into stock (quantity, location_id, product_id) values (67, 33, 4);
+insert into stock (quantity, location_id, product_id) values (51, 36, 4);
+insert into stock (quantity, location_id, product_id) values (83, 29, 5);
+insert into stock (quantity, location_id, product_id) values (58, 36, 10);
+insert into stock (quantity, location_id, product_id) values (99, 30, 13);
+insert into stock (quantity, location_id, product_id) values (22, 29, 4);
+insert into stock (quantity, location_id, product_id) values (20, 35, 12);
+insert into stock (quantity, location_id, product_id) values (39, 38, 12);

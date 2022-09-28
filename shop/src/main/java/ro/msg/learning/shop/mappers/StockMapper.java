@@ -22,7 +22,6 @@ public class StockMapper {
 
     public static StockDTO stockToStockDTO(Stock stock) {
         return StockDTO.builder()
-                .id(stock.getId())
                 .quantity(stock.getQuantity())
                 .locationId(stock.getLocation().getId())
                 .productId(stock.getProduct().getId())

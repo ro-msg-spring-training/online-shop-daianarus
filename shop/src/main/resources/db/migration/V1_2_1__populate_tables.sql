@@ -1,0 +1,10 @@
+insert into customer (email_address, first_name, last_name, password, username) values ('btschersich0@microsoft.com', 'Boyce', 'Tschersich', 'test', 'test');
+insert into customer (email_address, first_name, last_name, password, username) values ('dbliben1@cloudflare.com', 'Desirae', 'Bliben', 'rJNnM', 'dbliben1');
+insert into customer (email_address, first_name, last_name, password, username) values ('tboskell2@ebay.com', 'Thaddus', 'Boskell', 'rjKB8', 'tboskell2');
+insert into customer (email_address, first_name, last_name, password, username) values ('kcassidy3@tinyurl.com', 'Keary', 'Cassidy', 'mqUvY', 'kcassidy3');
+insert into customer (email_address, first_name, last_name, password, username) values ('rrylance4@sciencedaily.com', 'Ramonda', 'Rylance', 'iB9p', 'rrylance4');
+insert into customer (email_address, first_name, last_name, password, username) values ('tfingleton5@ucsd.edu', 'Tawsha', 'Fingleton', 'L0mdQ', 'tfingleton5');
+insert into customer (email_address, first_name, last_name, password, username) values ('jjoan6@prnewswire.com', 'Jodee', 'Joan', 'eELcP', 'jjoan6');
+insert into customer (email_address, first_name, last_name, password, username) values ('gbacchus7@statcounter.com', 'Gaultiero', 'Bacchus', 'w4Ugr', 'gbacchus7');
+insert into customer (email_address, first_name, last_name, password, username) values ('rclarkewilliams8@scribd.com', 'Rhetta', 'Clarke-Williams', '99uO', 'rclarkewilliams8');
+insert into customer (email_address, first_name, last_name, password, username) values ('gblacklawe9@sun.com', 'Gaylord', 'Blacklawe', 'JJZ', 'gblacklawe9');

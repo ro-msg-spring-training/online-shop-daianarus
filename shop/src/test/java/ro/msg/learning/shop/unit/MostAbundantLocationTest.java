@@ -14,7 +14,6 @@ import ro.msg.learning.shop.TestBase;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.mockito.Mockito.when;
 
@@ -35,8 +34,7 @@ class MostAbundantLocationTest extends TestBase {
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
-        when(stockRepository.findLocationByProductAndQuantity(1, 1)).thenReturn(stocks);
-        when(stockRepository.findLocationByProductAndQuantity(2, 100)).thenReturn(new ArrayList<>());
+        when(stockRepository.findLocationByProductAndQuantity(4, 5)).thenReturn(stocks);
     }
 
     @Test
@@ -59,7 +57,7 @@ class MostAbundantLocationTest extends TestBase {
         order.setAddress(address);
 
         List<Stock> stocks = strategy.implementStrategy(order);
-        Assertions.assertEquals("MAggs", stocks.get(0).getLocation().getName());
+        Assertions.assertEquals("Skinte", stocks.get(0).getLocation().getName());
 
     }
 

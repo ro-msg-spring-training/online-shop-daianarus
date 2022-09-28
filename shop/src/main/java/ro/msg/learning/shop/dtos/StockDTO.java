@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonPropertyOrder({"locationId", "productId", "quantity"})
 public class StockDTO {
-    private Integer id;
     private Integer locationId;
     private Integer productId;
     private Integer quantity;

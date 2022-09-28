@@ -31,7 +31,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
     `address_street` varchar(30),
     `created_at` datetime,
     `customer_id` integer,
-     FOREIGN KEY (customer_id) references customer (id)
+    `shipped_from` integer,
+     FOREIGN KEY (customer_id) references customer (id),
+     FOREIGN KEY (shipped_from) references location (id)
 );
 
 CREATE TABLE IF NOT EXISTS `product_category` (
@@ -64,15 +66,6 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
     FOREIGN KEY (order_id)  references orders(id),
     FOREIGN KEY (product_id)  references product (id)
 );
-
- CREATE TABLE IF NOT EXISTS order_location (
-
-    primary key (order_id, location_id),
-    `order_id` integer not null,
-    `location_id` integer not null,
-    FOREIGN KEY (order_id) references orders(id),
-    FOREIGN KEY (location_id) references location(id)
- );
 
 CREATE TABLE IF NOT EXISTS `revenue` (
 

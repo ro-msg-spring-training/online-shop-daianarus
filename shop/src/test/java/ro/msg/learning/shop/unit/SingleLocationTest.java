@@ -37,7 +37,7 @@ class SingleLocationTest extends TestBase {
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
-        when(stockRepository.findLocationByProductAndQuantity(1, 10)).thenReturn(stocks);
+        when(stockRepository.findLocationByProductAndQuantity(4, 10)).thenReturn(stocks);
     }
 
     @Test
