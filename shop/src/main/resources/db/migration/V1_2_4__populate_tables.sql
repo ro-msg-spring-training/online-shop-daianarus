@@ -1,0 +1,10 @@
+insert into product_category (description, name) values ('Assisted pool exercise', 'Namfix');
+insert into product_category (description, name) values ('Closed valvotomy NOS', 'Stronghold');
+insert into product_category (description, name) values ('Patellar sequestrectomy', 'Temp');
+insert into product_category (description, name) values ('Correct everted punctum', 'Keylex');
+insert into product_category (description, name) values ('Anterior rect resect NEC', 'Zamit');
+insert into product_category (description, name) values ('Closed breast biopsy', 'Zoolab');
+insert into product_category (description, name) values ('Applic ext fix-humerus', 'Bitwolf');
+insert into product_category (description, name) values ('Pubiotomy to assist del', 'Redhold');
+insert into product_category (description, name) values ('Cl red-int fix metat/tar', 'Daltfresh');
+insert into product_category (description, name) values ('Exc of accessory spleen', 'Matsoft');

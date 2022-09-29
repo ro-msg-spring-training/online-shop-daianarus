@@ -1,14 +1,10 @@
 package ro.msg.learning.shop.entities;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import ro.msg.learning.shop.utils.Address;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,13 +22,9 @@ public class Order {
     @EqualsAndHashCode.Include
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "order_location",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "location_id"))
-    @Fetch(value = FetchMode.SELECT)
-    private Set<Location> shippedFrom;
+    @ManyToOne()
+    @JoinColumn(name = "shipped_from")
+    private Location shippedFrom;
 
     @ManyToOne
     private Customer customer;

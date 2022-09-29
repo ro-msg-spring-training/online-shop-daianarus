@@ -1,102 +1,66 @@
 package ro.msg.learning.shop.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import ro.msg.learning.shop.dtos.ProductCategoryDTO;
-import ro.msg.learning.shop.dtos.ProductDTO;
 import ro.msg.learning.shop.entities.Product;
-import ro.msg.learning.shop.entities.ProductCategory;
-import ro.msg.learning.shop.exceptions.ProductNotFoundException;
-import ro.msg.learning.shop.mappers.ProductMapper;
-import ro.msg.learning.shop.repositories.ProductCategoryRepository;
 import ro.msg.learning.shop.repositories.ProductRepository;
 
-import java.util.ArrayList;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ProductService {
+    @Autowired
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
-    private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductDTO createProduct(ProductDTO productDto) {
-        Product product = Product.builder()
-                .name(productDto.getName())
-                .description(productDto.getDescription())
-                .price(productDto.getPrice())
-                .weight(productDto.getWeight())
-                .imageUrl(productDto.getImageUrl())
-                .productCategory(checkCategoryPresence(productDto.getProductCategory()))
-                .build();
-        productRepository.save(product);
-        return productMapper.productToProductDTO(product);
+    @Transactional
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
     }
 
-    public ProductCategory checkCategoryPresence(ProductCategoryDTO productCategoryDTO) {
-        Optional<ProductCategory> searchedCategory = productCategoryRepository.findByName(productCategoryDTO.getName());
-        ProductCategory productCategory;
-        if (searchedCategory.isPresent()) {
-            productCategory = searchedCategory.get();
-        } else {
-            productCategory = new ProductCategory();
-            productCategory.setName(productCategoryDTO.getName());
-            productCategory.setDescription(productCategoryDTO.getDescription());
-            productCategoryRepository.save(productCategory);
-        }
-        return productCategory;
-
-    }
-
-    public ProductDTO updateProduct(Integer id, ProductDTO updatedProduct) {
-        ProductDTO resultedProduct;
+    @Transactional
+    public Product updateProduct(Integer id, Product updatedProduct) {
         Optional<Product> productToUpdate = productRepository.findById(id);
+        Product result = null;
         if (productToUpdate.isPresent()) {
-            Product updated = productToUpdate.get();
-            updated.setName(updatedProduct.getName());
-            updated.setPrice(updatedProduct.getPrice());
-            updated.setDescription(updatedProduct.getDescription());
-            updated.setWeight(updatedProduct.getWeight());
-            updated.setImageUrl(updatedProduct.getImageUrl());
-            updated.setProductCategory(checkCategoryPresence(updatedProduct.getProductCategory()));
-            productRepository.save(updated);
-            resultedProduct = productMapper.productToProductDTO(updated);
-        } else throw new ProductNotFoundException("Product not found!");
-        return resultedProduct;
+            Product toUpdate = productToUpdate.get();
+            toUpdate.setName(updatedProduct.getName());
+            toUpdate.setDescription(updatedProduct.getDescription());
+            toUpdate.setPrice(updatedProduct.getPrice());
+            toUpdate.setWeight(updatedProduct.getWeight());
+            toUpdate.setImageUrl(updatedProduct.getImageUrl());
+            toUpdate.setProductCategory(updatedProduct.getProductCategory());
+            toUpdate.setSupplier(updatedProduct.getSupplier());
+            result = productRepository.save(toUpdate);
+
+        }
+        return result;
     }
 
+    @Transactional
     public void deleteProductById(Integer id) {
         productRepository.deleteById(id);
     }
 
-    public List<ProductDTO> getAllProducts() {
-        List<ProductDTO> existingProducts = new ArrayList<>();
-        try {
-            List<Product> products = productRepository.findAll();
-            if (products.isEmpty()) {
-                throw new ProductNotFoundException("Products not found!");
-            } else {
-                for (Product p : products) {
-                    existingProducts.add(productMapper.productToProductDTO(p));
-                }
-            }
-        } catch (ProductNotFoundException ex) {
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        }
-        return existingProducts;
+    @Transactional
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
     }
 
-    public ProductDTO getProductById(Integer id) {
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    public Product getProductById(Integer id) {
         Optional<Product> searchedProduct = productRepository.findById(id);
         if (searchedProduct.isPresent()) {
-            return productMapper.productToProductDTO(searchedProduct.get());
+            return searchedProduct.get();
         } else {
-            throw new ProductNotFoundException("Product not found!");
+            throw new EntityNotFoundException("Product" + id + "not found!");
         }
     }
 }

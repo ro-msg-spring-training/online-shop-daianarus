@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.entities;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Table(name = "stock")
+@JsonPropertyOrder()
 public class Stock {
     @Id
     @Column(unique = true)

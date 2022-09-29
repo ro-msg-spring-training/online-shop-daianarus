@@ -1,0 +1,10 @@
+insert into location (address_city, address_country, address_street, name) values ('Firuzabad', 'IR', '9 Shasta Park', 'Wordify');
+insert into location (address_city, address_country, address_street, name) values ('Ipoti', 'NG', '26566 Bluejay Center', 'Photolist');
+insert into location (address_city, address_country, address_street, name) values ('Piskorevci', 'HR', '506 Mitchell Court', 'Skinte');
+insert into location (address_city, address_country, address_street, name) values ('Марnhо', 'MK', '578 Spaight Trail', 'Jaxspan');
+insert into location (address_city, address_country, address_street, name) values ('Grebkow', 'PL', '3848 Moland Park', 'Zoomzone');
+insert into location (address_city, address_country, address_street, name) values ('Tujing', 'CH', '10 Merry Circle', 'Quimba');
+insert into location (address_city, address_country, address_street, name) values ('Kiikala', 'FI', '88 Randy Pass', 'Tekfly');
+insert into location (address_city, address_country, address_street, name) values ('Shixian', 'CH', '8009 Pine View Plaza', 'Browseblab');
+insert into location (address_city, address_country, address_street, name) values ('Tadou', 'CH', '116 Mayfield Street', 'Twitterbridge');
+insert into location (address_city, address_country, address_street, name) values ('Myronivka', 'UA', '30802 West Hill', 'Yakitri');

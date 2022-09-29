@@ -1,0 +1,10 @@
+insert into revenue (date, sum, location_id) values ('2019-03-02 13:56:04', 25.19, 29);
+insert into revenue (date, sum, location_id) values ('2019-09-23 07:18:39', 17.68, 32);
+insert into revenue (date, sum, location_id) values ('2019-03-03 00:30:59', 5.24, 29);
+insert into revenue (date, sum, location_id) values ('2019-12-01 12:18:47', 27.5, 37);
+insert into revenue (date, sum, location_id) values ('2019-10-30 22:30:44', 69.93, 29);
+insert into revenue (date, sum, location_id) values ('2020-01-14 21:29:31', 16.13, 34);
+insert into revenue (date, sum, location_id) values ('2019-06-09 01:17:51', 5.73, 35);
+insert into revenue (date, sum, location_id) values ('2019-08-22 18:47:53', 55.12, 31);
+insert into revenue (date, sum, location_id) values ('2019-09-29 15:32:11', 79.27, 38);
+insert into revenue (date, sum, location_id) values ('2019-12-31 18:09:04', 40.13, 35);

@@ -1,0 +1,10 @@
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('San Mariano', 'Philippines', '158 Saint Paul Pass', '2019-12-01 13:20:07', 12, 29);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Colorado Springs', 'United States', '1362 Old Shore Parkway', '2019-06-19 17:51:27', 14, 29);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Mauloo', 'Indonesia', '96360 Northwestern Place', '2019-08-27 09:40:26', 13, 30);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Kentville', 'Canada', '10 Meadow Vale Junction', '2019-08-07 12:34:16', 13, 30);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Gent', 'Belgium', '6 Eliot Court', '2019-09-13 21:29:45', 13, 31);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Huangshi', 'China', '877 Sunnyside Court', '2019-05-29 06:34:34',  15, 32);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Taozhuang', 'China', '5 Spenser Plaza', '2019-12-04 21:55:15',  19, 32);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Saint Louis', 'United States', '4586 Charing Cross Pass', '2019-10-18 03:26:09',  12, 35);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Ostrowsko', 'Poland', '69789 Jenna Terrace', '2019-10-24 16:08:30', 19, 36);
+insert into orders (address_city, address_country, address_street, created_at, customer_id, shipped_from) values ('Cruz Alta', 'Brazil', '938 Sherman Way', '2020-01-29 12:14:16', 20, 36);

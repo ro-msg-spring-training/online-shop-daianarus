@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-@Data
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class ProductCategoryDTO{
-    private String name;
-    private String description;
+@Data
+public class AddressDTO {
+    private String country;
+    private String city;
+    private String street;
 }
